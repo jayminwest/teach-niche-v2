@@ -1,0 +1,38 @@
+{
+  "name": "@teach-niche/api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --exec tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@google-cloud/logging": "^11.0.0",
+    "@google-cloud/error-reporting": "^3.0.5",
+    "@google-cloud/storage": "^7.0.0",
+    "express": "^4.19.2",
+    "firebase-admin": "^12.0.0",
+    "stripe": "^14.0.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^7.0.0",
+    "@teach-niche/database": "workspace:*",
+    "@teach-niche/types": "workspace:*",
+    "@teach-niche/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.0",
+    "tsx": "^4.0.0",
+    "nodemon": "^3.0.0",
+    "@teach-niche/eslint-config": "workspace:*",
+    "@teach-niche/typescript-config": "workspace:*",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0"
+  }
+}

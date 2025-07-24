@@ -1,135 +1,140 @@
-# Turborepo starter
+# Teach Niche V2
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern kendama tutorial marketplace where instructors create video lessons and students purchase access. Built for reliability, maintainability, and LLM-driven development.
 
-## Using this example
+## Tech Stack
 
-Run the following command:
+- **Frontend**: Next.js 15 with App Router
+- **Backend**: Node.js/Express structured monolith
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: Firebase Auth
+- **Payments**: Stripe Connect (15% platform fee)
+- **Infrastructure**: Google Cloud Run, Cloud Storage
+- **Development**: Turborepo, TypeScript, pnpm
 
-```sh
-npx create-turbo@latest
-```
+## Getting Started
 
-## What's inside?
+### Prerequisites
 
-This Turborepo includes the following packages/apps:
+- Node.js 18+
+- pnpm 8+
+- Docker & Docker Compose
+- PostgreSQL client (optional, for direct DB access)
 
-### Apps and Packages
+### Local Development Setup
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+1. **Clone and install dependencies**
+   ```bash
+   git clone https://github.com/yourusername/teach-niche-v2.git
+   cd teach-niche-v2
+   pnpm install
+   ```
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+2. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your values
+   ```
 
-### Utilities
+3. **Start local services**
+   ```bash
+   docker-compose up -d
+   ```
 
-This Turborepo has some additional tools already setup for you:
+4. **Run database migrations**
+   ```bash
+   pnpm turbo run db:migrate --filter=@teach-niche/database
+   ```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+5. **Start development servers**
+   ```bash
+   pnpm dev
+   ```
 
-### Build
+   This starts:
+   - API server at http://localhost:8080
+   - Web app at http://localhost:3000
+   - Prisma Studio at http://localhost:5555
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
+## Project Structure
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+teach-niche-v2/
+├── apps/
+│   ├── api/          # Backend API (structured monolith)
+│   └── web/          # Next.js frontend
+├── packages/
+│   ├── database/     # Prisma schema and client
+│   ├── types/        # Shared TypeScript types
+│   └── utils/        # Common utilities
+├── infrastructure/   # Terraform IaC (coming soon)
+├── scripts/          # Development and deployment scripts
+└── docker-compose.yml
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## Development Commands
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+```bash
+# Install dependencies
+pnpm install
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+# Start all development servers
+pnpm dev
 
-### Remote Caching
+# Build all packages
+pnpm build
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+# Run linting
+pnpm lint
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+# Type checking
+pnpm turbo run check-types
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+# Database commands
+pnpm turbo run db:studio --filter=@teach-niche/database  # Prisma Studio
+pnpm turbo run db:migrate --filter=@teach-niche/database # Run migrations
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## API Endpoints
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+### Authentication
+- `GET /api/auth/me` - Get current user
+- `POST /api/auth/set-role` - Set user role
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
+### Lessons
+- `GET /api/lessons` - List all lessons
+- `GET /api/lessons/:id` - Get lesson details
+- `POST /api/lessons` - Create lesson (instructor only)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+### Payments
+- `POST /api/payments/checkout` - Create Stripe checkout session
+- `POST /api/payments/webhook` - Stripe webhook handler
 
-## Useful Links
+### Videos
+- `GET /api/videos/access/:lessonId` - Get signed video URL
 
-Learn more about the power of Turborepo:
+## Database Schema
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+The database uses PostgreSQL with the following main tables:
+- `users` - Students and instructors
+- `lessons` - Tutorial content
+- `purchases` - Transaction records
+- `reviews` - Lesson ratings and comments
+- `payouts` - Instructor payment records
+
+See `packages/database/prisma/schema.prisma` for full schema.
+
+## Deployment
+
+Coming soon: Automated deployment to Google Cloud Run via GitHub Actions.
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Run tests and linting
+4. Submit a pull request
+
+## License
+
+Private - All rights reserved

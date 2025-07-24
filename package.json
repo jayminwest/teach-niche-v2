@@ -1,20 +1,55 @@
 {
-  "name": "temp-turbo",
+  "name": "teach-niche-v2",
   "private": true,
+  "version": "1.0.0",
+  "description": "Kendama tutorial marketplace with AI-first development",
   "scripts": {
-    "build": "turbo run build",
     "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:unit": "jest --testPathPattern=unit",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "lint:fix": "turbo run lint -- --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json,yml,yaml}\"",
+    "check-types": "turbo run check-types",
+    "db:generate": "turbo run db:generate --filter=@teach-niche/database",
+    "db:push": "turbo run db:push --filter=@teach-niche/database",
+    "db:migrate": "turbo run db:migrate --filter=@teach-niche/database",
+    "db:studio": "turbo run db:studio --filter=@teach-niche/database",
+    "db:seed": "turbo run db:seed --filter=@teach-niche/database",
+    "services:start": "docker-compose up -d",
+    "services:stop": "docker-compose down",
+    "services:logs": "docker-compose logs -f",
+    "test-services:start": "docker-compose -f docker-compose.test.yml up -d",
+    "test-services:stop": "docker-compose -f docker-compose.test.yml down",
+    "clean": "turbo run clean && rm -rf node_modules coverage .turbo",
+    "setup": "pnpm install && pnpm services:start && pnpm db:push && pnpm db:seed",
+    "validate": "pnpm check-types && pnpm lint && pnpm test:coverage"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@types/jest": "^29.5.0",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
     "prettier": "^3.6.2",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "turbo": "^2.5.5",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "zod": "^3.23.8"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18"
-  }
+    "node": ">=20",
+    "pnpm": ">=8"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
